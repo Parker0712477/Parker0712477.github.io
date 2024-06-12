@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html ⚡ lang="en">
-  {% include head.html %}
-  <body>
-    {% include header.html %}
+<html lang="en">
+{% include head.html %}
+<body>
 
-    {{ content }}
+  {{ content }}
 
-    {% comment %}
-        {% include analytics.html %}
-    {% endcomment %}
-  </body>
+  {% include arrow_top.html %}
+  {% include javascripts.html %}
+  {% include analytics.html %}
+</body>
 </html>

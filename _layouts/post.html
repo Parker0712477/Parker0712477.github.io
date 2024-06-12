@@ -1,157 +1,92 @@
 ---
 layout: default
 ---
-  {% if page.cover %}
-  <figure class="ampstart-image-fullpage-hero m0 relative mb4">
-    <amp-img width="404" height="720" alt="{{ page.title }}" layout="responsive" src="{{ site.baseurl }}{{ page.cover }}" media="(max-width: 415px)"></amp-img>
-    <amp-img height="720" alt="{{ page.title }}" layout="fixed-height" src="{{ site.baseurl }}{{ page.cover }}" media="(min-width: 416px)"></amp-img>
-    <figcaption class="absolute top-0 right-0 bottom-0 left-0">
-      <header class="p3">
-        <h1 class="ampstart-fullpage-hero-heading mb0 hanuman">
-          <span class="ampstart-fullpage-hero-heading-text title">
-            {{ page.title }}
-          </span>
-        </h1>
-        <h2 class="ampstart-fullpage-hero-heading mb0">
-          {% if page.author %}
-          <span class="ampstart-fullpage-hero-heading-text description">
-            By <b><a href="#" role="author" class="text-decoration-none author">{{page.author}}</a></b>
-          </span>
-          {% endif %}
-        </h2>
-      </header>
-      <footer class="absolute left-0 right-0 bottom-0">
-        <a class="ampstart-readmore py3 caps line-height-2 text-decoration-none center block h5" href="#content"><span class="ampstart-readmore-text px1">Read more</span></a>
-      </footer>
-    </figcaption>
-  </figure>
+{% include header.html %}
 
-  <main id="content" role="main" class="">
-    <article class="photo-article">
-      <div class="post-meta mb4 px3">
-        <time class="post-date" datetime="{{ page.date | date:'%Y-%m-%d' }}">{{ page.date | date_to_string }}</time>
-
-        {% if page.tags.size > 0 %}
-            in
-            {% for tag in page.tags %}
-                {% if forloop.index == page.tags.size %}
-                   <a href='{{site.baseurl}}tags/#{{tag}}'>{{ tag | capitalize }}</a>
-                {% else %}
-                   <a href='{{site.baseurl}}tags/#{{tag}}'>{{ tag | capitalize }}</a>,
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-
+<main class="post_content">
+  <article class="post">
+    <header>
+      <div class="post_image">
+        <img src={{ "/assets/img/" | prepend: site.baseurl | append : page.img}} alt="{{page.title}}">
       </div>
+      <div class="post_description">
+        <p class="post_meta">{{page.date | date: '%Y, %b %d'}}</p>
+        <h1 class="post_title">{{page.title}}</h1>
+      </div>
+    </header> <!-- End Header -->
 
-      <div class="mb4 px3 radhakrishna" align="left">
-		    <amp-social-share type="facebook" width="45" height="33" data-param-app_id="145393166088568"></amp-social-share>
-		    <amp-social-share type="twitter" width="45" height="33"></amp-social-share>
-		    <amp-social-share type="whatsapp" width="45" height="33"></amp-social-share>
-		    <amp-social-share type="gplus" width="45" height="33"></amp-social-share>
-		    <amp-social-share width="45" height="33" type="email"></amp-social-share>
-	    </div>
-
-  {% else %}
-
-    <main id="content" role="main" class="">
-      <article class="recipe-article">
-        <header>
-          {% if page.tags.size > 0 %}
-          <span class="ampstart-subtitle block px3 pt2 mb2">
-                        {% for tag in page.tags %}
-                            {% if forloop.index == page.tags.size %}
-                               <a href='{{site.baseurl}}tags/#{{tag}}'>{{ tag | capitalize }}</a>
-                            {% else %}
-                               <a href='{{site.baseurl}}tags/#{{tag}}'>{{ tag | capitalize }}</a>,
-                            {% endif %}
-                        {% endfor %}
-          </span>
-          {% endif %}
-          <h1 class="mb1 px3">{{page.title}}</h1>
-
-          <address class="ampstart-byline clearfix mb4 px3 h5">
-            <time class="ampstart-byline-pubdate block bold my1" datetime="{{ page.date | date:'%e %B %Y' }}">{{ page.date | date:'%e %B %Y' }}</time>
-          </address>
-        </header>
-
-  {% endif %}
-
-    <div class="px3 mb4">
-      {{content}}
+    <div class="entry_content">
+      {{page.content | markdownify}}
     </div>
+    
+    <div class="post_wrapper">
+      <footer class="post_footer cf">
+        <div class="post_share">
+          <span>Share:</span>
+          <a href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ site.url }}{{ page.url }}" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+          <a href="https://facebook.com/sharer.php?u={{ site.url }}{{ page.url }}" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+          <a href="https://plus.google.com/share?url={{ site.url }}{{ page.url }}" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+        </div>
+        <div class="post_tag">
+          <span>Tags:</span>
+          {% for tag in page.tags %}
+          <a href="{{site.baseurl}}/tags#{{tag}}" class="tag">{{ tag }}</a>
+          {% endfor %}
+        </div>
+      </footer>
+    </div>
+  </article> <!-- End Section Post -->
 
-    <!-- Start Related article -->
+  <section class="author cf">
+    <div class="post_wrapper">
+      <div class="author_image">
+        <img src="{{site.baseurl}}/assets/img/{% if site.author-pic %}{{ site.author-pic }}{% endif %}" alt="Author face">
+      </div>
+      <div class="author_info">
+        <h2 class="author_title">{% if site.author-name %}{{site.author-name}}{% else %}Dwayne Newman{% endif %}</h2>
+        <p class="author_subtitle">{% if site.about-author %}{{site.about-author}}{% else %}La croix godard blue bottle, vape iceland fingerstache cronut single-origin coffee lyft snackwave normcore small batch.{% endif %}</p>
+        <div class="author_social">
+          {% if site.email %}
+          <span class="author_email"><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:{{site.email}}">{{site.email}}</a></span>
+          {% else %}
+          <span class="author_email"><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:dwayne@example.com">dwayne@example.com</a></span>
+          {% endif %}
+          
+          {% if site.phone %}
+          <span class="author_phone"><i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:{{site.phone}}">{{site.phone}}</a></span>
+          {% else %}
+          <span class="author_phone"><i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:+496-169-65-57">(496)-169-6557</a></span>
+          {% endif %}
 
-    {% if page.tags.size > 0 %}
-        {% assign primary = page.tags | first %}
-        {% assign related_posts = 0 %}
-        {% for post in site.posts %}
-          {% if post.tags.size > 0 %}
-              {% if post.tags contains primary %}
-                {% assign related_posts = related_posts | plus: 1 %}
-              {% endif %}
+          {% if site.website %}
+          <span class="author_website"><i class="fa fa-link" aria-hidden="true"></i> <a href="{{site.website}}" target="_blank">{{site.website}}</a></span>
+          {% else %}
+          <span class="author_website"><i class="fa fa-link" aria-hidden="true"></i> <a href="#" target="_blank">https://dwayne.example.com</a></span>
+          {% endif %}            
+        </div>
+      </div>
+    </div>
+  </section> <!-- End Section Author -->
+
+  <section class="recent_box">
+    <div class="post_wrapper">
+      <h2 class="recent_title">Recent post</h2>
+      <div class="recent_list">
+        {% for post in site.posts offset:0 limit:6 %}
+          {% if post.title %}
+            <a href="{{ post.url | prepend: site.baseurl }}"
+              class="recent_item"
+              style="background-image: url( {{ "/assets/img/" | prepend: site.baseurl | append : post.img}} )">
+                <span>{{ post.title }}</span>
+            </a>
           {% endif %}
         {% endfor %}
-        {% if related_posts > 1 %}
-          <section class="ampstart-related-article-section p3 mb4 border-top">
-              <h2 class="ampstart-heading ampstart-label m0 mb3">Related article</h2>
-                <article class="ampstart-related-article">
-                    {% if post.cover %}
-                    <amp-img src="{{ site.baseurl }}{{ post.cover }}" width="656" height="350" layout="responsive" alt="" class="mb3"></amp-img>
-                    {% else %}
-                        {% if site.cover %}
-                        <amp-img src="{{ site.baseurl }}{{ site.cover }}" width="656" height="350" layout="responsive" alt="" class="mb3"></amp-img>
-                        {% endif %}
-                    {% endif %}
-                    {% assign count = 0 %}
-                    {% for post in site.posts %}
-                      {% if post.tags contains primary %}
-                        {% if post.title != page.title %}
-                          {% assign count = count | plus: 1 %}
-                          {% if count <= 3 %}
-                            <h3 class="ampstart-heading h4 m0 mb3"><b>{{ post.title }}</b></h3>
-                            <p class="line-height-4 mb3">
-                            {% if post.description %}
-                              {{post.description}}
-                            {% else %}
-                              {{ post.content | strip_html | truncatewords:15 }}
-                            {% endif %}
-                            </p>
-                            <a href="{{ site.baseurl }}{{ post.url | remove: '/' }}" class="ampstart-rekated-article-readmore block text-decoration-none ampstart-label">Read more</a>
-                          {% endif %}
-                        {% endif %}
-                      {% endif %}
-                    {% endfor %}
-                </article>
-          </section>
-        {% endif %}
-    {% endif %}
-    <!-- End Related article -->
-<hr>
-
-{% for author in site.data.authors %}
-  {% if author[1].username == page.author %}
-    <div class="author-section mb4">
-        {% if author[1].assets %}
-            <amp-img width="100" height="100" class="author-thumb-post" layout="responsive" src="{{ site.baseurl }}{{author[1].assets}}" alt="{{author[1].name}}"/></amp-img>
-        {% endif %}
-        <a href="{{site.baseurl}}authors/#{{author[1].username}}"><h4 class="author-name">{{author[1].name}}</h4></a>
-        <p class="mb4 px3">{{author[1].bio}}</p>
+      </div>
     </div>
-  {% endif %}
-{% endfor %}
+  </section> <!-- End Section Recent Box -->
+  
+  {% include disqus.html %}
+  
+</main> <!-- End Section Post Content -->
 
-<!-- Start Socialbox -->
-<div class="ampstart-social-box mb4">
-  <amp-social-share type="twitter" aria-label="Share this on Twitter"></amp-social-share>
-  <amp-social-share type="facebook" aria-label="Share this on Facebook" data-param-app_id="145393166088568"></amp-social-share>
-  <amp-social-share type="gplus" aria-label="Share this on Google Plus"></amp-social-share>
-  <amp-social-share type="email" aria-label="Share this with E-mail"></amp-social-share>
-</div>
-<!-- End Socialbox -->
-
-
-  {% include footer.html %}
-
-</main>
+{% include footer.html %}
